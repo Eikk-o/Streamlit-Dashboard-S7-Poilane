@@ -10,7 +10,7 @@ from utils.viz import (
     plot_map
 )
 
-st.set_page_config(page_title="Data Storytelling Dashboard", layout="wide")
+st.set_page_config(page_title="Streamlit Dashboard", layout="wide")
 
 # Load raw data
 raw_df = load_raw_data()
