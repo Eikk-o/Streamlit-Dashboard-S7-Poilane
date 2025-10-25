@@ -62,7 +62,7 @@ paris2024-dashboard/
 ## ¤ Installation ¤
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/paris2024-dashboard.git
+git clone https://github.com/Eikk-o/Streamlit-Dashboard-S7-Poilane.git
 cd paris2024-dashboard
 
 # Install dependencies
