@@ -2,43 +2,70 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+
+# Apply consistent theme
+def apply_theme(fig):
+    fig.update_layout(
+        font=dict(family="Arial", size=14, color="#FBFBFB"),
+        title_font=dict(size=18, color="#DAC36C"),
+        paper_bgcolor="#071F32",
+        plot_bgcolor="#071F32",
+        legend_title="Legend"
+    )
+    return fig
+
 def plot_age_histogram(df):
-    fig = px.histogram(df, x='Âge', nbins=20, title='Age Distribution',
-                       labels={'Âge': 'Age (years)', 'count': 'Number of Athletes'})
-    fig.add_vline(x=30, line_dash="dash", line_color="red", annotation_text="Age 30 threshold")
-    fig.update_traces(marker_color='blue')
-    fig.update_layout(xaxis_title="Age (years)", yaxis_title="Athletes", showlegend=False)
+    fig = px.histogram(df, x='Age', nbins=20, title='Age Distribution among athletes',
+                       labels={'Age': 'Age (years)', 'Count': 'Number of Athletes'})
+    fig.update_traces(marker_color='#27D2FF')
+    fig.update_layout(xaxis_title="Age (years)", yaxis_title="Athletes count", showlegend=False, bargap=0.1)
+    fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
 
 def plot_age_boxplot(df):
-    fig = px.box(df, x='Discipline', y='Âge', title='Age by Discipline',
-                 labels={'Âge': 'Age (years)', 'Discipline': 'Sport'})
+    fig = px.box(df, x='Sport', y='Age', title='Age by Sport',
+                 labels={'Age': 'Age (years)', 'Sport': 'Sport'})
     fig.update_layout(xaxis_tickangle=-45)
+    fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
 
 def plot_age_violin(df):
-    fig = px.violin(df, x='Genre', y='Âge', box=True, points='all',
-                    title='Age by Gender', labels={'Âge': 'Age (years)', 'Genre': 'Gender'})
+    fig = px.violin(df, x='Gender', y='Age', box=True, points='all',
+                    title='Age by Gender', labels={'Age': 'Age (years)', 'Gender': 'Gender'})
+    fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
+
 
 def plot_age_scatter(df):
-    fig = px.scatter(df, x='Âge', y='Nombre de compétitions', color='Discipline',
-                     hover_data=['nom'], title='Age vs Competitions',
-                     labels={'Âge': 'Age (years)', 'Nombre de compétitions': 'Competitions'})
-    fig.add_hline(y=5, line_dash="dot", line_color="green", annotation_text="5 competitions")
+    fig = px.scatter(df, x='Age', y='Competitions', color='Sport',
+                     hover_data=['Name'], title='Age vs Competitions',
+                     labels={'Age': 'Age (years)', 'Competitions': 'Competitions'})
+    fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
+
 
 def plot_age_heatmap(df):
-    pivot = df.pivot_table(index='Discipline', columns='Genre', values='Âge', aggfunc='median')
+    pivot = df.pivot_table(index='Sport', columns='Gender', values='Age', aggfunc='median')
     fig = px.imshow(pivot, text_auto=True, aspect='auto', title='Median Age by Sport & Gender',
                     labels={'color': 'Median Age'})
+    fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
 
-def plot_map(df):
-    if 'Latitude' in df.columns and 'Longitude' in df.columns:
-        fig = px.scatter_mapbox(df, lat='Latitude', lon='Longitude', hover_name='nom', color='Discipline',
-                                zoom=1, height=500)
-        fig.update_layout(mapbox_style='open-street-map')
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.warning("No geographic data available for map visualization.")
+def plot_world_map(df, agg_func='median'):
+    # Aggregate age by country
+    age_by_country = df.groupby('Country')['Age'].agg(agg_func).reset_index()
+    age_by_country.columns = ['Country', 'Age']
+
+    # Create choropleth map
+    fig = px.choropleth(
+        age_by_country,
+        locations='Country',
+        locationmode='country names',
+        color='Age',
+        color_continuous_scale='Viridis',
+        title=f'{agg_func.capitalize()} Athlete Age by Country',
+        labels={'Age': f'{agg_func.capitalize()} Age'}
+    )
+    
+    fig = apply_theme(fig)
+    st.plotly_chart(fig, use_container_width=True)
