@@ -1,94 +1,104 @@
-# Data Storytelling Dashboard: Diversity of Athletes by Age
+# Paris 2024 Olympic Athletes Dashboard
 
-## 📖 Project Overview
-This project is a **Streamlit web application** that tells the story of **age diversity among athletes at the Paris 2024 Olympics**. It explores how age varies across disciplines, genders, and participation levels, using interactive visualizations.
-
-The narrative follows:
-- **Hook:** Why age diversity matters in sports.
-- **Context:** Olympics unite generations.
-- **Insights:** Which sports favor youth vs. experience.
-- **Implications:** Training, media coverage, and research directions.
+## ¤ Overview ¤
+This project is an **interactive Streamlit dashboard** that explores the **age diversity of athletes** participating in the **Paris 2024 Olympic Games**. Using official athlete data, the dashboard provides insights into how age varies across sports, genders, countries, and continents.
 
 ---
 
-## 📂 Folder Structure
+## ¤ Features ¤
+- **Data Cleaning & Preprocessing**:
+  - Rename French columns to English.
+  - Normalize gender and country names.
+  - Compute missing ages and fills missing heights.
+  - Drop duplicates and irrelevant columns.
+
+- **Interactive Filters**:
+  - Filter by sport, gender, and age range.
+
+- **Visualizations**:
+  - Age distribution histogram.
+  - Boxplot by sport.
+  - Violin plot by gender.
+  - Scatter plot (Age vs Competitions).
+  - Heatmap (Median age by sport & gender).
+  - Choropleth world map (age metrics by country).
+
+- **Dynamic Interpretations**:
+  - Highlights countries with highest and lowest ages for selected metric.
+  - Adds continent-level analysis to compare geographic trends.
+
+- **Storytelling Conclusion**:
+  - A narrative that transforms data into a human story of ambition and diversity.
+
+---
+
+## ¤ Project Structure ¤
 ```
-pp.py
+paris2024-dashboard/
 ├─ app.py                  # Main Streamlit app
 ├─ sections/
-│  ├─ intro.py            # Context, objectives, data caveats
-│  ├─ overview.py         # KPIs, high-level trends
+│  ├─ intro.py            # Introduction
+│  ├─ overview.py         # KPIs
 │  ├─ deep_dives.py       # Comparisons, distributions, drilldowns
-│  └─ conclusions.py      # Insights, implications, next steps
+│  └─ conclusions.py      # Conclusion
 ├─ utils/
 │  ├─ io.py               # Data loading and caching
-│  ├─ prep.py             # Cleaning and feature engineering
+│  ├─ prep.py             # Cleaning and processing
 │  └─ viz.py              # Visualization functions
 ├─ data/
 │  └─ paris2024-athletes.csv  # Dataset
-├─ assets/                # Optional images/logos
 └─ requirements.txt       # Dependencies
 ```
 
 ---
 
-## ✅ Features
-- Sidebar filters for discipline and gender.
-- KPI metrics (youngest, oldest, median age).
-- Five interactive charts:
-  1. Histogram of ages
-  2. Boxplot by discipline
-  3. Violin plot by gender
-  4. Scatter plot (age vs competitions)
-  5. Heatmap (median age by sport & gender)
-- Data quality notes and key insights section.
+## ¤ Data Description ¤
+- **Source**: Paris 2024 Athletes dataset (open license).
+- **Key Columns**:
+  - `Name`, `Sport`, `Country`, `Gender`, `Age`, `Height (cm)`, `Competitions`, `Birthdate`.
 
 ---
 
-## ⚙️ Installation
-1. Clone the repository:
+## ¤ Installation ¤
 ```bash
-git clone <your-repo-url>
-cd pp.py
-```
-2. Install dependencies:
-```bash
+# Clone the repository
+git clone https://github.com/your-repo/paris2024-dashboard.git
+cd paris2024-dashboard
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-## ▶️ Usage
-Run the Streamlit app:
+## >> How to Run
 ```bash
 streamlit run app.py
 ```
-Access the dashboard at `http://localhost:8501`.
+Then open the local URL provided by Streamlit.
 
 ---
 
-## 📊 Dataset
-- **Source:** Paris 2024 Athletes dataset
-- **License:** Open Data (cite original portal)
+## ¤ Dashboard Insights ¤
+- **Age Diversity**: From teenage gymnasts to veteran equestrians, the dashboard reveals striking contrasts.
+- **Geographic Trends**:
+  - Asia tends to have younger athletes.
+  - Europe and Oceania lean older.
+  - Africa and South America show balanced age profiles.
+- **Implications**:
+  - Training programs can adapt to age patterns.
+  - Media can spotlight generational contrasts.
 
 ---
 
-## 🚀 Deployment
-You can deploy the app on **Streamlit Cloud**:
-1. Push your code to GitHub.
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud).
-3. Connect your repo and deploy.
+## ¤ Storytelling Conclusion ¤
+The Paris 2024 Olympics is more than a competition, it is a **global narrative of resilience and dreams**. Every number represents a story: a young athlete chasing glory, a veteran defying time, and nations celebrating their cultural approach to sport.
+
+Age is not a limit, it is a lens through which we see the beauty of diversity in sports.
 
 ---
 
-## 🛠 Tech Stack
-- Python 3.9+
-- Streamlit ≥ 1.33
-- Pandas, Seaborn, Matplotlib
-
----
-
-## 📌 Notes
-- Document any missing data or caveats in `intro.py`.
-- Ensure reproducibility with pinned dependencies.
-
+## ¤ Future Improvements ¤
+- Add performance metrics by age group.
+- Explore correlations between age and medal success.
+- Enable export of filtered data and visualizations.
