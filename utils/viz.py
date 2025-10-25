@@ -38,7 +38,7 @@ def plot_age_violin(df):
 
 def plot_age_scatter(df):
     fig = px.scatter(df, x='Age', y='Competitions', color='Sport',
-                     hover_data=['Name'], title='Age vs Competitions',
+                     title='Age vs Competitions',
                      labels={'Age': 'Age (years)', 'Competitions': 'Competitions'})
     fig = apply_theme(fig)
     st.plotly_chart(fig, use_container_width=True)
